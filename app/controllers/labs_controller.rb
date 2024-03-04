@@ -42,8 +42,34 @@ class LabsController < ApplicationController
         render json: @form_submission.errors, status: :unprocessable_entity
       end
     end
+
+    # GET /labs/:lab_id/form_submissions
+    def get_form_submissions
+      @lab = Lab.find(params[:id])
+      @form_submissions = @lab.form_submissions
+
+      render json: @form_submissions
+    end
   
-    private
+      # GET /labs/:lab_id/patients/:patient_id
+      def get_lab_patient
+        @lab = Lab.find(params[:lab_id])
+        @form_submission = @lab.form_submissions.find(params[:form_submission_id])
+        @patient_id = @form_submission.patient_id
+        @patient = Patient.find(@patient_id)
+      
+        render json: @patient
+      end
+
+      # GET /labs/:lab_id/patients/:patient_id/form_submissions
+      def get_patient_form_submissions
+        @lab = Lab.find(params[:lab_id])
+        @patient = Patient.find(params[:patient_id])
+        @form_submissions = @lab.form_submissions.where(patient_id: @patient.id)
+
+        render json: @form_submissions
+      end
+
       def set_lab
         @lab = Lab.find(params[:id])
       end

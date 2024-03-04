@@ -5,7 +5,8 @@ class CreateFormSubmissions < ActiveRecord::Migration[6.1]
       t.references :patient, null: false, foreign_key: true
       t.references :lab, null: false, foreign_key: true
       t.references :form, null: false, foreign_key: true
-      t.json :data
+      t.json :form_values
+      t.json :files, array: true, default: []
 
       t.timestamps
     end

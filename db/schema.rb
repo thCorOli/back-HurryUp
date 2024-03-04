@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 2024_02_27_002814) do
     t.integer "patient_id", null: false
     t.integer "lab_id", null: false
     t.integer "form_id", null: false
-    t.json "data"
+    t.json "form_values"
+    t.json "files", default: []
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["dentist_id"], name: "index_form_submissions_on_dentist_id"
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(version: 2024_02_27_002814) do
     t.string "name"
     t.string "email"
     t.string "cpf"
+    t.string "prontuario"
     t.date "birthday"
     t.integer "dentist_id", null: false
     t.datetime "created_at", precision: 6, null: false

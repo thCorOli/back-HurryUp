@@ -2,7 +2,8 @@
 require 'jwt'
 class DentistsController < ApplicationController
     before_action :set_dentist, only: [:show, :update, :destroy]
-  
+    wrap_parameters false
+
     def login
       # Acesse os parâmetros dentro do objeto dentist
       @dentist = Dentist.find_by(email: params[:dentist][:email])
@@ -49,14 +50,14 @@ class DentistsController < ApplicationController
     def submit_form
       @dentist = Dentist.find(params[:dentist_id])
       @form_submission = @dentist.form_submissions.build(form_submission_params)
-  
+    
       if @form_submission.save
         render json: @form_submission, status: :created
       else
         render json: @form_submission.errors, status: :unprocessable_entity
       end
     end
-  
+    
     def show_patient
       @dentist = Dentist.find(params[:dentist_id])
       @patient = @dentist.patients.find(params[:patient_id])
@@ -93,23 +94,32 @@ class DentistsController < ApplicationController
       end
   end
 
-
-
-    private
-      def set_dentist
-        @dentist = Dentist.find(params[:id])
-      end
-  
-      def dentist_params
-        params.require(:dentist).permit(:name, :email, :password, :cpf, :birthday)
-      end
-  
-      def patient_params
-        params.require(:patient).permit(:name, :email, :cpf, :birthday)
-      end
-  
-      def form_submission_params
-        params.require(:form_submission).permit(:patient_id, :lab_id, :form_id, :data)
-      end
+  def list_labs
+    @labs = Lab.all
+    render json: @labs
   end
+
+  def list_form_submissions
+    @dentist = Dentist.find(params[:id])
+    @form_submissions = @dentist.form_submissions
+    render json: @form_submissions, methods: [:files]
+  end
+  
+  private
+    def set_dentist
+      @dentist = Dentist.find(params[:id])
+    end
+
+    def dentist_params
+      params.require(:dentist).permit(:name, :email, :password, :cpf, :birthday)
+    end
+
+    def patient_params
+      params.require(:patient).permit(:name, :email, :cpf, :birthday)
+    end
+
+    def form_submission_params
+      params.permit(:file,:patient_id, :lab_id, :form_id,:dentist_id ,:dentist, form_values: {})
+    end
+end
   
