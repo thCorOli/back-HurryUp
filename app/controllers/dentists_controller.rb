@@ -34,6 +34,7 @@ class DentistsController < ApplicationController
     def create_patient
       @dentist = Dentist.find(params[:dentist_id])
       @patient = @dentist.patients.build(patient_params)
+      
   
       if @patient.save
         render json: @patient, status: :created
@@ -50,10 +51,13 @@ class DentistsController < ApplicationController
     def submit_form
       @dentist = Dentist.find(params[:dentist_id])
       @form_submission = @dentist.form_submissions.build(form_submission_params)
-    
+      Rails.logger.debug("Params recebidos: #{params.inspect}")
+      Rails.logger.debug("Dentista encontrado: #{@dentist}")
+      
       if @form_submission.save
         render json: @form_submission, status: :created
       else
+        Rails.logger.error("Erro ao salvar o formulário de submissão: #{@form_submission.errors}")
         render json: @form_submission.errors, status: :unprocessable_entity
       end
     end
@@ -100,8 +104,8 @@ class DentistsController < ApplicationController
   end
 
   def list_form_submissions
-    @dentist = Dentist.find(params[:id])
-    @form_submissions = @dentist.form_submissions
+    @patient = Patient.find(params[:patient_id])
+    @form_submissions = @patient.form_submissions
     render json: @form_submissions, methods: [:files]
   end
   
@@ -115,11 +119,28 @@ class DentistsController < ApplicationController
     end
 
     def patient_params
-      params.require(:patient).permit(:name, :email, :cpf, :birthday)
+      params.require(:patient).permit(:name, :email, :cpf, :birthday, :prontuario)
     end
 
     def form_submission_params
-      params.permit(:file,:patient_id, :lab_id, :form_id,:dentist_id ,:dentist, form_values: {})
+      params.require(:form_submission).permit(:files, :patient_id, :lab_id, :form_id, :dentist_id, form_values: {})
+    end
+    
+
+    def authenticate_token
+      token = request.headers['Authorization']
+      if token
+        begin
+          decoded_token = JWT.decode(token, 'secret_key', true, algorithm: 'HS256')
+          dentist_id = decoded_token.first['dentist_id']
+          @current_dentist = Dentist.find(dentist_id)
+        rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+          render json: { error: 'Token inválido ou expirado' }, status: :unauthorized
+        end
+      else
+        render json: { error: 'Token não encontrado' }, status: :unauthorized
+      end
     end
 end
+
   

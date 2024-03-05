@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       post '/form_submissions', to: 'dentists#submit_form'
       get '/patients/:patient_id', to: 'dentists#show_patient'
       get '/list_labs', to: 'dentists#list_labs', on: :collection
-      get '/list_form_submissions', to: 'dentists#list_form_submissions', on: :member
+      get '/patients/:patient_id/form_submissions', to: 'dentists#list_form_submissions'
     end
 
     # Rotas para Labs
