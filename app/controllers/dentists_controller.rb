@@ -123,7 +123,7 @@ class DentistsController < ApplicationController
     end
 
     def form_submission_params
-      params.require(:form_submission).permit(:files, :patient_id, :lab_id, :form_id, :dentist_id, form_values: {})
+      params.require(:form_submission).permit(:patient_id, :lab_id, :form_id, :dentist_id, form_values: {}, files: [])
     end
     
 
