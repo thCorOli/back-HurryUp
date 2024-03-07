@@ -70,16 +70,32 @@ class LabsController < ApplicationController
         render json: @form_submissions
       end
 
-      def set_lab
-        @lab = Lab.find(params[:id])
-      end
+      private
+        def set_lab
+          @lab = Lab.find(params[:id])
+        end
   
-      def lab_params
-        params.require(:lab).permit(:name, :email, :password, :cnpj)
-      end
+        def lab_params
+          params.require(:lab).permit(:name, :email, :password, :cnpj)
+        end
   
-      def feedback_params
-        params.require(:form_submission).permit(:feedback)
-      end
-  end
+        def feedback_params
+          params.require(:form_submission).permit(:feedback)
+        end
+
+        def authenticate_token
+          token = request.headers['Authorization']
+          if token
+            begin
+              decoded_token = JWT.decode(token, 'secret_key', true, algorithm: 'HS256')
+              dentist_id = decoded_token.first['dentist_id']
+              @current_dentist = Dentist.find(dentist_id)
+            rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+              render json: { error: 'Token inválido ou expirado' }, status: :unauthorized
+            end
+          else
+            render json: { error: 'Token não encontrado' }, status: :unauthorized
+          end
+    end
+end
   
