@@ -119,7 +119,7 @@ class DentistsController < ApplicationController
     end
 
     def patient_params
-      params.require(:patient).permit(:name, :email, :cpf, :birthday, :prontuario)
+      params.require(:patient).permit(:name, :email, :cpf, :birthday, :prontuario, :sex, :cor)
     end
 
     def form_submission_params

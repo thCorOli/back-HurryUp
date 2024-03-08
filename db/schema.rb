@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 2024_02_27_002814) do
     t.string "email"
     t.string "cpf"
     t.string "prontuario"
+    t.string "sex"
+    t.string "cor"
     t.date "birthday"
     t.integer "dentist_id", null: false
     t.datetime "created_at", precision: 6, null: false
