@@ -5,12 +5,12 @@
 #   gem 'sqlite3'
 #
 default: &default
-  #adapter: postgresql
+  adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  #url: <%= ENV['POSTGRES_URL'] || 'postgres://hurryup_bd_user:mI0GiohABupK98KEnGCijgJ9Oae2zPt1@dpg-cnkfqsq1hbls73ckris0-a/hurryup_bd' %>
+  url: <%= ENV['POSTGRES_URL'] || 'postgres://hurryup_bd_user:mI0GiohABupK98KEnGCijgJ9Oae2zPt1@dpg-cnkfqsq1hbls73ckris0-a/hurryup_bd' %>
 
 development:
   <<: *default
