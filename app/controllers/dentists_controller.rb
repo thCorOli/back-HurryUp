@@ -115,7 +115,7 @@ class DentistsController < ApplicationController
     end
 
     def dentist_params
-      params.require(:dentist).permit(:name, :email, :password, :cpf, :birthday)
+      params.require(:dentist).permit(:name, :email, :password, :cpf, :birthday, :password_confirmation)
     end
 
     def patient_params
