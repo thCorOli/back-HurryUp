@@ -27,7 +27,7 @@ test:
 
 production:
   <<: *default
-  database: hurryup_bd_qs0l
+  url: <%= ENV['DATABASE_URL'] %>
+  database: hurryup_bd
   username: hurryup_bd_user
-  username: <%= ENV['DATABASE_USER'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  password: mI0GiohABupK98KEnGCijgJ9Oae2zPt1
