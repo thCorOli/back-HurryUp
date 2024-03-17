@@ -28,6 +28,13 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
+#
+# Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
+# for a full overview on how database connection configuration can be specified.
+#
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: hurryup_bd
   username: hurryup_bd_user
   password: <%= ENV['HURRYUP_DATABASE_PASSWORD'] %>
