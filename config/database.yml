@@ -10,6 +10,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['POSTGRES_URL'] || 'postgres://hurryup_bd_user:rWF6CAvQdigVjDk30bznZyhURbdFD4VC@dpg-cnr0snect0pc73cprdr0-a/hurryup_bd_qs0l'%>
 
 development:
   <<: *default
@@ -27,4 +28,7 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  
+  database: hurryUp-bd
+  username: hurryUp
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>  
