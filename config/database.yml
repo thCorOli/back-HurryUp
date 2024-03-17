@@ -30,4 +30,4 @@ production:
   url: <%= ENV['DATABASE_URL'] %>
   database: hurryup_bd
   username: hurryup_bd_user
-  password: mI0GiohABupK98KEnGCijgJ9Oae2zPt1
+  password: <%= ENV['HURRYUP_DATABASE_PASSWORD'] %>
