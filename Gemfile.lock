@@ -228,25 +228,25 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
+  bcrypt
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
   image_processing (~> 1.2)
-  jbuilder (~> 2.7)
+  jbuilder
   jwt
   listen (~> 3.3)
   pg
-  puma (~> 5.0)
+  puma
   rack-cors
-  rails (~> 6.1.4, >= 6.1.4.1)
-  sass-rails (>= 6)
+  rails
+  sass-rails
   selenium-webdriver
   spring
-  turbolinks (~> 5)
+  turbolinks
   tzinfo-data
   web-console (>= 4.1.0)
-  webpacker (>= 4.0)
+  webpacker
 
 RUBY VERSION
    ruby 3.0.2p107
